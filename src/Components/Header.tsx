@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Outlet, Link, useMatch, PathMatch } from 'react-router-dom';
 import styled from 'styled-components';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, useScroll, useMotionValueEvent } from 'framer-motion';
 
-const Nav = styled.nav`
+const Nav = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
+  position: fixed;
+  width: 100%;
   height: 80px;
   padding: 0px 30px;
   align-items: center;
@@ -17,18 +19,6 @@ const Col = styled.div`
   display: flex;
   align-items: center;
 `;
-
-const logoVariants = {
-  normal: {
-    fillOpacity: 1,
-  },
-  active: {
-    fillOpacity: [0, 1, 0],
-    transition: {
-      repeat: Infinity,
-    },
-  },
-};
 
 const Logo = styled(motion.svg)`
   margin-right: 50px;
@@ -94,27 +84,53 @@ const Input = styled(motion.input)`
   background-color: transparent;
   border: 1px solid ${(props) => props.theme.white.lighter};
 `;
+
+const logoVariants = {
+  normal: {
+    fillOpacity: 1,
+  },
+  active: {
+    fillOpacity: [0, 1, 0],
+    transition: {
+      repeat: Infinity,
+    },
+  },
+};
+
+const navVariants = {
+  top: {
+    backgroundColor: 'rgba(0,0,0,1)',
+  },
+  scroll: {
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
+};
+
 function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const homeMatch: PathMatch<string> | null = useMatch('/');
   const tvMatch: PathMatch<string> | null = useMatch('tv');
-  const inputAnimation = useAnimation();
+  const navAnimation = useAnimation();
+  const { scrollY } = useScroll();
 
   const toggleSearch = () => {
-    if (searchOpen) {
-      inputAnimation.start({
-        scaleX: 0,
-      });
-    } else {
-      inputAnimation.start({
-        scaleX: 1,
-      });
-    }
     setSearchOpen((prev) => !prev);
   };
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    if (latest > 80) {
+      navAnimation.start('scroll');
+    } else {
+      navAnimation.start('top');
+    }
+  });
   return (
     <>
-      <Nav>
+      <Nav
+        variants={navVariants}
+        animate={navAnimation}
+        initial={{ backgroundColor: 'rgba(0,0,0,1)' }}
+      >
         <Col>
           <Logo
             variants={logoVariants}
