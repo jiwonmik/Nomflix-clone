@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { useMovies } from '../hooks/movie';
+import { useMovies } from '../hooks/useMovies';
 import { makeImgaePath } from '../api/utils';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
   background: whitesmoke;
@@ -43,16 +44,45 @@ const Overview = styled.h2`
 `;
 
 const Slider = styled.div`
-  width: 100%;
-  height: 400px;
-  background-color: antiquewhite;
+  position: relative;
+  top: -200px;
 `;
-const Row = styled(motion.div)``;
-const Box = styled(motion.div)``;
+
+const Row = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  width: 100%;
+  position: absolute;
+`;
+const Box = styled(motion.div)`
+  height: 200px;
+  background-color: red;
+`;
+
+const rowVariants = {
+  hidden: {
+    x: window.outerWidth + 180,
+  },
+  visible: {
+    x: 0,
+  },
+  exit: {
+    x: -window.outerWidth - 180,
+  },
+};
 
 function Home() {
   const { data, isLoading } = useMovies();
+  const [index, setIndex] = useState(0);
+  const [leaving, setLeaving] = useState(false);
+  const increaseIndex = () => {
+    if (leaving) return;
+    toggleLeaving();
+    setIndex((prev) => prev + 1);
+  };
 
+  const toggleLeaving = () => setLeaving((prev) => !prev);
   if (isLoading) return <h2>Loading...</h2>;
 
   return (
@@ -61,12 +91,25 @@ function Home() {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner bgPhoto={makeImgaePath(data![0].backdrop_path)}>
+          <Banner onClick={increaseIndex} bgPhoto={makeImgaePath(data![0].backdrop_path)}>
             <Title>{data![0].original_title}</Title>
             <Overview>{data![0].overview}</Overview>
           </Banner>
           <Slider>
-            <Row></Row>
+            <AnimatePresence onExitComplete={toggleLeaving}>
+              <Row
+                key={index}
+                variants={rowVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{ type: 'tween', duration: 1.5 }}
+              >
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <Box key={i}>{i}</Box>
+                ))}
+              </Row>
+            </AnimatePresence>
           </Slider>
         </>
       )}
