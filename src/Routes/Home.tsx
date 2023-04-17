@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { useMovies } from '../hooks/useMovies';
-import { makeImgaePath } from '../api/utils';
+import { makeImagePath } from '../api/utils';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
+import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -44,7 +45,7 @@ const Overview = styled.h2`
 
 const Slider = styled.div`
   position: relative;
-  top: -200px;
+  top: -100px;
 `;
 
 const Row = styled(motion.div)`
@@ -54,6 +55,7 @@ const Row = styled(motion.div)`
   width: 100%;
   position: absolute;
 `;
+
 const Box = styled(motion.div)`
   &:first-child {
     transform-origin: center left;
@@ -61,6 +63,7 @@ const Box = styled(motion.div)`
   &:last-child {
     transform-origin: center right;
   }
+  cursor: pointer;
 `;
 
 const Image = styled(motion.div)<{ bgPhoto: string }>`
@@ -82,6 +85,52 @@ const Info = styled(motion.div)`
     text-align: center;
     color: white;
   }
+`;
+
+const Modal = styled(motion.div)<{ bgPhoto?: string }>`
+  width: 40vw;
+  height: 80vh;
+  background-color: ${(props) => props.theme.black.lighter};
+  background-size: cover;
+  position: fixed;
+  top: 80px;
+  left: 0px;
+  right: 0px;
+  margin: 0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+`;
+
+const ModalCover = styled.div`
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 400px;
+`;
+
+const ModalTitle = styled.h3`
+  color: ${(props) => props.theme.white.lighter};
+  font-size: 36px;
+  padding: 20px;
+  position: relative;
+  top: -60px;
+`;
+
+const ModalOverview = styled.p`
+  font-size: 20px;
+  padding: 20px;
+  position: relative;
+  top: -60px;
+  color: ${(props) => props.theme.white.darker};
+`;
+
+const Overlay = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
 `;
 
 const rowVariants = {
@@ -120,19 +169,35 @@ function Home() {
   const { data, isLoading } = useMovies();
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
+
+  const navigate = useNavigate();
+  const moviePathMatch: PathMatch<string> | null = useMatch('/movies/:id');
+
   const offset = 6;
 
   const increaseIndex = () => {
     if (data) {
       if (leaving) return;
       toggleLeaving();
-      const totalMovies = data.length - 1;
+      const totalMovies = data.results.length - 1;
       const maxIndex = Math.floor(totalMovies / offset) - 1;
       setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
     }
   };
 
   const toggleLeaving = () => setLeaving((prev) => !prev);
+  const onBoxClicked = (movieId: number) => {
+    navigate(`/movies/${movieId}`);
+  };
+  const onOverlayClicked = () => {
+    navigate('/');
+  };
+
+  const clickedMovie =
+    moviePathMatch?.params.id &&
+    data?.results.find((movie) => movie.id.toString() === moviePathMatch.params.id);
+
+  console.log(clickedMovie);
 
   if (isLoading) return <h2>Loading...</h2>;
 
@@ -142,9 +207,12 @@ function Home() {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner onClick={increaseIndex} bgPhoto={makeImgaePath(data![0].backdrop_path)}>
-            <Title>{data![0].original_title}</Title>
-            <Overview>{data![0].overview}</Overview>
+          <Banner
+            onClick={increaseIndex}
+            bgPhoto={makeImagePath(data?.results[0].backdrop_path || '')}
+          >
+            <Title>{data?.results[0].original_title}</Title>
+            <Overview>{data?.results[0].overview}</Overview>
           </Banner>
           <Slider>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
@@ -156,18 +224,20 @@ function Home() {
                 exit="exit"
                 transition={{ type: 'tween', duration: 1.5 }}
               >
-                {data!
+                {data?.results
                   .slice(1)
                   .slice(offset * index, offset * index + offset)
                   .map((movie) => (
                     <Box
                       key={movie.id}
+                      layoutId={movie.id.toString()}
                       variants={boxVariants}
                       transition={{ type: 'tween' }}
                       whileHover="hover"
                       initial="normal"
+                      onClick={() => onBoxClicked(movie.id)}
                     >
-                      <Image bgPhoto={makeImgaePath(movie.poster_path, 'w500')} />
+                      <Image bgPhoto={makeImagePath(movie.poster_path, 'w500')} />
                       <Info variants={infoVariants}>
                         <h4>{movie.title}</h4>
                       </Info>
@@ -176,6 +246,33 @@ function Home() {
               </Row>
             </AnimatePresence>
           </Slider>
+          <AnimatePresence>
+            {moviePathMatch ? (
+              <>
+                <Overlay
+                  onClick={onOverlayClicked}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                />
+                <Modal layoutId={moviePathMatch.params.id}>
+                  {clickedMovie && (
+                    <>
+                      <ModalCover
+                        style={{
+                          backgroundImage: `linear-gradient(to top, black,transparent), url(${makeImagePath(
+                            clickedMovie.backdrop_path,
+                            'w500'
+                          )})`,
+                        }}
+                      />
+                      <ModalTitle>{clickedMovie.title}</ModalTitle>
+                      <ModalOverview>{clickedMovie.overview}</ModalOverview>
+                    </>
+                  )}
+                </Modal>
+              </>
+            ) : null}
+          </AnimatePresence>
         </>
       )}
     </Wrapper>
