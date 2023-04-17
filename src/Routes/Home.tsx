@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 
 const Wrapper = styled.div`
-  background: whitesmoke;
   width: 100%;
   height: 200vh;
   position: absolute;
@@ -55,16 +54,33 @@ const Row = styled(motion.div)`
   width: 100%;
   position: absolute;
 `;
-const Box = styled(motion.div)<{ bgPhoto: string }>`
-  height: 200px;
-  background-image: url(${(props) => props.bgPhoto});
-  background-size: cover;
-  background-position: center center;
+const Box = styled(motion.div)`
   &:first-child {
     transform-origin: center left;
   }
   &:last-child {
     transform-origin: center right;
+  }
+`;
+
+const Image = styled(motion.div)<{ bgPhoto: string }>`
+  background-image: url(${(props) => props.bgPhoto});
+  height: 200px;
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+`;
+
+const Info = styled(motion.div)`
+  padding: 20px;
+  background-color: ${(props) => props.theme.black.lighter};
+  opacity: 0;
+  position: relative;
+  width: 100%;
+  bottom: 10px;
+  h4 {
+    text-align: center;
+    color: white;
   }
 `;
 
@@ -77,6 +93,12 @@ const rowVariants = {
   },
   exit: {
     x: -window.outerWidth - 170,
+  },
+};
+
+const infoVariants = {
+  hover: {
+    opacity: 1,
   },
 };
 
@@ -140,12 +162,16 @@ function Home() {
                   .map((movie) => (
                     <Box
                       key={movie.id}
-                      bgPhoto={makeImgaePath(movie.poster_path, 'w500')}
                       variants={boxVariants}
                       transition={{ type: 'tween' }}
                       whileHover="hover"
                       initial="normal"
-                    />
+                    >
+                      <Image bgPhoto={makeImgaePath(movie.poster_path, 'w500')} />
+                      <Info variants={infoVariants}>
+                        <h4>{movie.title}</h4>
+                      </Info>
+                    </Box>
                   ))}
               </Row>
             </AnimatePresence>
