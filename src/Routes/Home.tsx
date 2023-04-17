@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   width: 100%;
   height: 200vh;
   position: absolute;
@@ -13,42 +13,51 @@ const Wrapper = styled.div`
   z-index: -1;
 `;
 
-const Loader = styled.div`
+export const Loader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const Banner = styled.div<{ bgPhoto: string }>`
+export const Banner = styled.div<{ bgPhoto: string }>`
   width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 100px;
+  padding: 80px 45px;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.bgPhoto});
   background-size: cover;
   color: white;
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   font-size: 50px;
   font-weight: 20;
   margin-bottom: 20px;
 `;
 
-const Overview = styled.h2`
+export const Overview = styled.h2`
   font-size: 20px;
   width: 50%;
 `;
 
-const Slider = styled.div`
-  position: relative;
-  top: -100px;
+export const Type = styled.h2`
+  font-size: 30px;
+  width: 100%;
+  padding-left: 30px;
+  position: absolute;
+  top: 680px;
+  color: ${(props) => props.theme.white.darker};
 `;
 
-const Row = styled(motion.div)`
+export const Slider = styled.div`
+  position: relative;
+  top: -150px;
+`;
+
+export const Row = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 5px;
@@ -56,7 +65,7 @@ const Row = styled(motion.div)`
   position: absolute;
 `;
 
-const Box = styled(motion.div)`
+export const Box = styled(motion.div)`
   &:first-child {
     transform-origin: center left;
   }
@@ -66,7 +75,7 @@ const Box = styled(motion.div)`
   cursor: pointer;
 `;
 
-const Image = styled(motion.div)<{ bgPhoto: string }>`
+export const Image = styled(motion.div)<{ bgPhoto: string }>`
   background-image: url(${(props) => props.bgPhoto});
   height: 200px;
   width: 100%;
@@ -74,7 +83,7 @@ const Image = styled(motion.div)<{ bgPhoto: string }>`
   background-position: center center;
 `;
 
-const Info = styled(motion.div)`
+export const Info = styled(motion.div)`
   padding: 20px;
   background-color: ${(props) => props.theme.black.lighter};
   opacity: 0;
@@ -87,7 +96,7 @@ const Info = styled(motion.div)`
   }
 `;
 
-const Modal = styled(motion.div)<{ bgPhoto?: string }>`
+export const Modal = styled(motion.div)<{ bgPhoto?: string }>`
   width: 40vw;
   height: 80vh;
   background-color: ${(props) => props.theme.black.lighter};
@@ -101,14 +110,14 @@ const Modal = styled(motion.div)<{ bgPhoto?: string }>`
   overflow: hidden;
 `;
 
-const ModalCover = styled.div`
+export const ModalCover = styled.div`
   background-size: cover;
   background-position: center center;
   width: 100%;
   height: 400px;
 `;
 
-const ModalTitle = styled.h3`
+export const ModalTitle = styled.h3`
   color: ${(props) => props.theme.white.lighter};
   font-size: 36px;
   padding: 20px;
@@ -116,7 +125,7 @@ const ModalTitle = styled.h3`
   top: -60px;
 `;
 
-const ModalOverview = styled.p`
+export const ModalOverview = styled.p`
   font-size: 20px;
   padding: 20px;
   position: relative;
@@ -124,7 +133,7 @@ const ModalOverview = styled.p`
   color: ${(props) => props.theme.white.darker};
 `;
 
-const Overlay = styled(motion.div)`
+export const Overlay = styled(motion.div)`
   position: absolute;
   top: 0;
   width: 100%;
@@ -133,7 +142,7 @@ const Overlay = styled(motion.div)`
   opacity: 0;
 `;
 
-const rowVariants = {
+export const rowVariants = {
   hidden: {
     x: window.outerWidth + 170,
   },
@@ -145,13 +154,13 @@ const rowVariants = {
   },
 };
 
-const infoVariants = {
+export const infoVariants = {
   hover: {
     opacity: 1,
   },
 };
 
-const boxVariants = {
+export const boxVariants = {
   normal: {
     scale: 1,
   },
@@ -197,8 +206,6 @@ function Home() {
     moviePathMatch?.params.id &&
     data?.results.find((movie) => movie.id.toString() === moviePathMatch.params.id);
 
-  console.log(clickedMovie);
-
   if (isLoading) return <h2>Loading...</h2>;
 
   return (
@@ -214,6 +221,7 @@ function Home() {
             <Title>{data?.results[0].original_title}</Title>
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
+          <Type>Now Playing Movies</Type>
           <Slider>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
               <Row
@@ -246,6 +254,7 @@ function Home() {
               </Row>
             </AnimatePresence>
           </Slider>
+          {/* <Type>Latest Movies</Type> */}
           <AnimatePresence>
             {moviePathMatch ? (
               <>

@@ -20,6 +20,12 @@ const router = createBrowserRouter([
       {
         path: 'tv',
         element: <Tv />,
+        children: [
+          {
+            path: ':id',
+            element: <Tv />,
+          },
+        ],
       },
       {
         path: 'search',

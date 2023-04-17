@@ -1,4 +1,4 @@
-const BASE_PATH = 'https://api.themoviedb.org/3/';
+const BASE_PATH = 'https://api.themoviedb.org/3/movie';
 const VITE_API_KEY = import.meta.env.VITE_API_KEY;
 
 export interface IGetMoviesResult {
@@ -30,7 +30,11 @@ export interface IMovie {
 }
 
 export const getNowPlayingMovies = async () => {
-  return fetch(`${BASE_PATH}/movie/now_playing?api_key=${VITE_API_KEY}`).then((response) =>
+  return fetch(`${BASE_PATH}/now_playing?api_key=${VITE_API_KEY}`).then((response) =>
     response.json()
   );
+};
+
+export const getLatestMovies = async () => {
+  return fetch(`${BASE_PATH}/latest?api_key=${VITE_API_KEY}`).then((response) => response.json());
 };
