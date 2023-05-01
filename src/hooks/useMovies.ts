@@ -1,11 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { IGetMoviesResult, getNowPlayingMovies } from '../api/movies';
-import { IGetTvShowsResult, getTvPopularShows } from '../api/shows';
+import { IGetMoviesResult, getLatestMovies, getNowPlayingMovies } from '../api/movies';
 
-export const useMovies = () => {
+export const useNowPlayingMovies = () => {
   return useQuery<IGetMoviesResult>(['movies', 'nowPlaying'], () => getNowPlayingMovies());
 };
 
-export const useTvShows = () => {
-  return useQuery<IGetTvShowsResult>(['tv', 'popular'], () => getTvPopularShows());
+export const useLatestMovies = () => {
+  return useQuery<IGetMoviesResult>(['movies', 'latest'], () => getLatestMovies());
 };

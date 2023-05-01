@@ -1,203 +1,28 @@
-import styled from 'styled-components';
-import { useMovies } from '../hooks/useMovies';
+import { useNowPlayingMovies } from '../hooks/useMovies';
 import { makeImagePath } from '../api/utils';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
-
-export const Wrapper = styled.div`
-  width: 100%;
-  height: 200vh;
-  position: absolute;
-  top: 40px;
-  z-index: -1;
-`;
-
-export const Loader = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Banner = styled.div<{ bgPhoto: string }>`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 80px 45px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-    url(${(props) => props.bgPhoto});
-  background-size: cover;
-  color: white;
-`;
-
-export const Title = styled.h1`
-  font-size: 50px;
-  font-weight: 20;
-  margin-bottom: 20px;
-`;
-
-export const Overview = styled.h2`
-  font-size: 20px;
-  width: 50%;
-`;
-
-export const Type = styled.h2`
-  font-size: 30px;
-  width: 100%;
-  padding-left: 30px;
-  position: absolute;
-  top: 680px;
-  color: ${(props) => props.theme.white.darker};
-`;
-
-export const Slider = styled.div`
-  position: relative;
-  top: -150px;
-`;
-
-export const Row = styled(motion.div)`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 5px;
-  width: 100%;
-  position: absolute;
-`;
-
-export const Box = styled(motion.div)`
-  &:first-child {
-    transform-origin: center left;
-  }
-  &:last-child {
-    transform-origin: center right;
-  }
-  cursor: pointer;
-`;
-
-export const Image = styled(motion.div)<{ bgPhoto: string }>`
-  background-image: url(${(props) => props.bgPhoto});
-  height: 200px;
-  width: 100%;
-  background-size: cover;
-  background-position: center center;
-`;
-
-export const Info = styled(motion.div)`
-  padding: 20px;
-  background-color: ${(props) => props.theme.black.lighter};
-  opacity: 0;
-  position: relative;
-  width: 100%;
-  bottom: 10px;
-  h4 {
-    text-align: center;
-    color: white;
-  }
-`;
-
-export const Modal = styled(motion.div)<{ bgPhoto?: string }>`
-  width: 40vw;
-  height: 80vh;
-  background-color: ${(props) => props.theme.black.lighter};
-  background-size: cover;
-  position: fixed;
-  top: 80px;
-  left: 0px;
-  right: 0px;
-  margin: 0 auto;
-  border-radius: 15px;
-  overflow: hidden;
-`;
-
-export const ModalCover = styled.div`
-  background-size: cover;
-  background-position: center center;
-  width: 100%;
-  height: 400px;
-`;
-
-export const ModalTitle = styled.h3`
-  color: ${(props) => props.theme.white.lighter};
-  font-size: 36px;
-  padding: 20px;
-  position: relative;
-  top: -60px;
-`;
-
-export const ModalOverview = styled.p`
-  font-size: 20px;
-  padding: 20px;
-  position: relative;
-  top: -60px;
-  color: ${(props) => props.theme.white.darker};
-`;
-
-export const Overlay = styled(motion.div)`
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-`;
-
-export const rowVariants = {
-  hidden: {
-    x: window.outerWidth + 170,
-  },
-  visible: {
-    x: 0,
-  },
-  exit: {
-    x: -window.outerWidth - 170,
-  },
-};
-
-export const infoVariants = {
-  hover: {
-    opacity: 1,
-  },
-};
-
-export const boxVariants = {
-  normal: {
-    scale: 1,
-  },
-  hover: {
-    scale: 1.3,
-    y: -50,
-    transition: {
-      delay: 0.3,
-      type: 'tween',
-    },
-  },
-};
+import NowPlaying from '../Components/Movie/NowPlaying';
+import {
+  SliderWrapper,
+  Wrapper,
+  Loader,
+  Banner,
+  Title,
+  Overview,
+  Overlay,
+  Modal,
+  ModalCover,
+  ModalTitle,
+  ModalOverview,
+} from '../Components/styles';
 
 function Home() {
-  const { data, isLoading } = useMovies();
-  const [index, setIndex] = useState(0);
-  const [leaving, setLeaving] = useState(false);
-
+  const { data, isLoading } = useNowPlayingMovies();
   const navigate = useNavigate();
+
   const moviePathMatch: PathMatch<string> | null = useMatch('/movies/:id');
 
-  const offset = 6;
-
-  const increaseIndex = () => {
-    if (data) {
-      if (leaving) return;
-      toggleLeaving();
-      const totalMovies = data.results.length - 1;
-      const maxIndex = Math.floor(totalMovies / offset) - 1;
-      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-    }
-  };
-
-  const toggleLeaving = () => setLeaving((prev) => !prev);
-  const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
-  };
   const onOverlayClicked = () => {
     navigate('/');
   };
@@ -206,55 +31,19 @@ function Home() {
     moviePathMatch?.params.id &&
     data?.results.find((movie) => movie.id.toString() === moviePathMatch.params.id);
 
-  if (isLoading) return <h2>Loading...</h2>;
-
   return (
     <Wrapper>
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner
-            onClick={increaseIndex}
-            bgPhoto={makeImagePath(data?.results[0].backdrop_path || '')}
-          >
+          <Banner bgPhoto={makeImagePath(data?.results[0].backdrop_path || '')}>
             <Title>{data?.results[0].original_title}</Title>
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
-          <Type>Now Playing Movies</Type>
-          <Slider>
-            <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-              <Row
-                key={index}
-                variants={rowVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                transition={{ type: 'tween', duration: 1.5 }}
-              >
-                {data?.results
-                  .slice(1)
-                  .slice(offset * index, offset * index + offset)
-                  .map((movie) => (
-                    <Box
-                      key={movie.id}
-                      layoutId={movie.id.toString()}
-                      variants={boxVariants}
-                      transition={{ type: 'tween' }}
-                      whileHover="hover"
-                      initial="normal"
-                      onClick={() => onBoxClicked(movie.id)}
-                    >
-                      <Image bgPhoto={makeImagePath(movie.poster_path, 'w500')} />
-                      <Info variants={infoVariants}>
-                        <h4>{movie.title}</h4>
-                      </Info>
-                    </Box>
-                  ))}
-              </Row>
-            </AnimatePresence>
-          </Slider>
-          {/* <Type>Latest Movies</Type> */}
+          <SliderWrapper>
+            <NowPlaying data={data} />
+          </SliderWrapper>
           <AnimatePresence>
             {moviePathMatch ? (
               <>
