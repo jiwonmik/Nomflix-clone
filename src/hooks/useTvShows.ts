@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { IGetTvShowsResult, getTvPopularShows } from '../api/shows';
+import { IGetTvShowsResult, getPopularTvShows } from '../api/shows';
 
-export const useTvShows = () => {
-  return useQuery<IGetTvShowsResult>(['tv', 'popular'], () => getTvPopularShows());
+export const usePopularTvShows = () => {
+  return useQuery<IGetTvShowsResult>(['tv', 'popular'], () => getPopularTvShows());
 };

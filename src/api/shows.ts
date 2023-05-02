@@ -24,6 +24,6 @@ export interface ITvShow {
   vote_count: number;
 }
 
-export const getTvPopularShows = async () => {
+export const getPopularTvShows = async () => {
   return fetch(`${BASE_PATH}/popular?api_key=${VITE_API_KEY}`).then((response) => response.json());
 };
