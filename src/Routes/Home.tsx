@@ -17,6 +17,7 @@ import {
   ModalOverview,
 } from '../Components/styles';
 import PopularMovies from '../Components/Movie/PopularMovies';
+import UpcomingMovies from '../Components/Movie/UpcomingMovies';
 
 function Home() {
   const { data, isLoading } = useNowPlayingMovies();
@@ -45,6 +46,7 @@ function Home() {
           <SlidersWrapper>
             <NowPlaying data={data} />
             <PopularMovies />
+            <UpcomingMovies />
           </SlidersWrapper>
           <AnimatePresence>
             {moviePathMatch ? (

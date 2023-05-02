@@ -34,3 +34,7 @@ export const getNowPlayingMovies = async () => {
 export const getPopluarMovies = async () => {
   return fetch(`${BASE_PATH}/popular?api_key=${VITE_API_KEY}`).then((response) => response.json());
 };
+
+export const getUpcomingMovies = async () => {
+  return fetch(`${BASE_PATH}/upcoming?api_key=${VITE_API_KEY}`).then((response) => response.json());
+};
