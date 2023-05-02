@@ -1,6 +1,6 @@
 import { IGetMoviesResult } from '../../api/movies';
 import Slider from './Slider';
-import { Category, RowContainer, SliderWrapper } from '../styles';
+import { Category, RowContainer, SliderWrapper } from '../../styles';
 
 export interface Props {
   data?: IGetMoviesResult;

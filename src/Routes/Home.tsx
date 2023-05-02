@@ -4,10 +4,10 @@ import { AnimatePresence } from 'framer-motion';
 import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
 import NowPlaying from '../Components/Movie/NowPlayingMovie';
 import {
-  SlidersWrapper,
-  Wrapper,
-  Loader,
   Banner,
+  Wrapper,
+  SlidersWrapper,
+  Loader,
   Title,
   Overview,
   Overlay,
@@ -15,7 +15,7 @@ import {
   ModalCover,
   ModalTitle,
   ModalOverview,
-} from '../Components/styles';
+} from '../styles';
 import PopularMovies from '../Components/Movie/PopularMovies';
 import UpcomingMovies from '../Components/Movie/UpcomingMovies';
 

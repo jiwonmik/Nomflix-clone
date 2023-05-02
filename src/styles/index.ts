@@ -9,12 +9,6 @@ export const Wrapper = styled.div`
   z-index: -1;
 `;
 
-export const Loader = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const Banner = styled.div<{ bgPhoto: string }>`
   width: 100%;
   height: 70vh;
@@ -28,17 +22,23 @@ export const Banner = styled.div<{ bgPhoto: string }>`
   color: white;
 `;
 
+export const SlidersWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+export const Loader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Category = styled.h2`
   font-size: 26px;
   font-weight: 500;
   padding: 20px;
   color: ${(props) => props.theme.white.darker};
-`;
-
-export const SlidersWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
 `;
 
 export const SliderWrapper = styled.div`

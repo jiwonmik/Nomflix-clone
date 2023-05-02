@@ -3,9 +3,9 @@ import { makeImagePath } from '../api/utils';
 import { AnimatePresence } from 'framer-motion';
 import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
 import {
+  Banner,
   Wrapper,
   Loader,
-  Banner,
   Title,
   Overview,
   Overlay,
@@ -14,7 +14,7 @@ import {
   ModalTitle,
   ModalOverview,
   SliderWrapper,
-} from '../Components/styles';
+} from '../styles';
 import Popular from '../Components/Tv/PopularTv';
 
 function Tv() {

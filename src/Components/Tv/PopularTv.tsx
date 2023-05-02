@@ -1,4 +1,4 @@
-import { Category, RowContainer, SliderWrapper } from '../styles';
+import { Category, RowContainer, SliderWrapper } from '../../styles';
 import Slider from './Slider';
 import { IGetTvShowsResult } from '../../api/shows';
 
