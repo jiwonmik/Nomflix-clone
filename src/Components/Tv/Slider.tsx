@@ -20,10 +20,9 @@ import { IGetTvShowsResult } from '../../api/shows';
 
 interface Props {
   data?: IGetTvShowsResult;
-  type: string;
 }
 
-function Slider({ data, type }: Props) {
+function Slider({ data }: Props) {
   const [leaving, setLeaving] = useState(false);
   const [index, setIndex] = useState(0);
 
@@ -31,8 +30,8 @@ function Slider({ data, type }: Props) {
   const offset = 6;
 
   const toggleLeaving = () => setLeaving((prev) => !prev);
-  const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
+  const onBoxClicked = (tvId: number) => {
+    navigate(`/tv/${tvId}`);
   };
 
   const increaseIndex = () => {
@@ -71,8 +70,8 @@ function Slider({ data, type }: Props) {
           .slice(offset * index, offset * index + offset)
           .map((tvShow) => (
             <Box
-              key={type + tvShow.id}
-              layoutId={type + tvShow.id.toString()}
+              key={tvShow.id}
+              layoutId={tvShow.id.toString()}
               variants={boxVariants}
               transition={{ Category: 'tween' }}
               whileHover="hover"

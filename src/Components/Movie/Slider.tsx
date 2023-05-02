@@ -20,10 +20,9 @@ import { makeImagePath } from '../../api/utils';
 
 interface Props {
   data?: IGetMoviesResult;
-  type: string;
 }
 
-function Slider({ data, type }: Props) {
+function Slider({ data }: Props) {
   const [leaving, setLeaving] = useState(false);
   const [index, setIndex] = useState(0);
 
@@ -71,8 +70,8 @@ function Slider({ data, type }: Props) {
           .slice(offset * index, offset * index + offset)
           .map((movie) => (
             <Box
-              key={type + movie.id}
-              layoutId={type + movie.id.toString()}
+              key={movie.id}
+              layoutId={movie.id.toString()}
               variants={boxVariants}
               transition={{ Category: 'tween' }}
               whileHover="hover"

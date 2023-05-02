@@ -9,7 +9,7 @@ function PopularMovies() {
     <SliderWrapper>
       <RowContainer>
         <Category>Popular Movies</Category>
-        {isLoading ? <Loader>Loading...</Loader> : <Slider data={data} type="popular" />}
+        {isLoading ? <Loader>Loading...</Loader> : <Slider data={data} />}
       </RowContainer>
     </SliderWrapper>
   );

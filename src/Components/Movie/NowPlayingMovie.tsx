@@ -11,7 +11,7 @@ function NowPlayingMovies({ data }: Props) {
     <SliderWrapper>
       <RowContainer>
         <Category>Now Playing Movies</Category>
-        <Slider data={data} type="nowPlaying" />
+        <Slider data={data} />
       </RowContainer>
     </SliderWrapper>
   );

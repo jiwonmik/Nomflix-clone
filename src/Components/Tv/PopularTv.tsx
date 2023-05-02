@@ -11,7 +11,7 @@ function Popular({ data }: Props) {
     <SliderWrapper>
       <RowContainer>
         <Category>Popular TV Shows</Category>
-        <Slider data={data} type="popular" />
+        <Slider data={data} />
       </RowContainer>
     </SliderWrapper>
   );
