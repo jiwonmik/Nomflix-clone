@@ -22,6 +22,27 @@ export const Banner = styled.div<{ bgPhoto: string }>`
   color: white;
 `;
 
+export const BtnWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 310px;
+  justify-content: space-between;
+`;
+
+export const PlayBtn = styled.button`
+  width: 150px;
+  height: 70px;
+  border: none;
+  border-radius: 15px;
+  font-size: 25px;
+  cursor: pointer;
+`;
+
+export const InfoBtn = styled(PlayBtn)`
+  background-color: rgba(191, 191, 191, 0.5);
+  color: white;
+`;
+
 export const SlidersWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -128,6 +149,7 @@ export const Title = styled.h1`
 export const Overview = styled.h2`
   font-size: 20px;
   width: 50%;
+  margin-bottom: 40px;
 `;
 
 export const Modal = styled(motion.div)<{ bgPhoto?: string }>`
