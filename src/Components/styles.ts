@@ -17,11 +17,11 @@ export const Loader = styled.div`
 
 export const Banner = styled.div<{ bgPhoto: string }>`
   width: 100%;
-  height: 100vh;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px 45px;
+  padding: 100px 80px 0px 80px;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.bgPhoto});
   background-size: cover;
@@ -30,16 +30,21 @@ export const Banner = styled.div<{ bgPhoto: string }>`
 
 export const Category = styled.h2`
   font-size: 26px;
+  font-weight: 500;
   padding: 20px;
   color: ${(props) => props.theme.white.darker};
 `;
 
-export const SliderWrapper = styled.div`
-  position: relative;
-  top: -150px;
+export const SlidersWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `;
 
-export const Slider = styled.div``;
+export const SliderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export const SliderLeftBtn = styled(motion.button)`
   width: 50px;
@@ -47,10 +52,10 @@ export const SliderLeftBtn = styled(motion.button)`
   border: none;
   border-radius: 50px;
   background-color: black;
-  position: absolute;
-  top: 70px;
-  opacity: 0;
   cursor: pointer;
+  opacity: 0;
+  position: inherit;
+  top: 80px;
 `;
 
 export const SliderRightBtn = styled(motion.button)`
@@ -59,23 +64,16 @@ export const SliderRightBtn = styled(motion.button)`
   border: none;
   border-radius: 50px;
   background-color: black;
-  position: absolute;
-  top: 70px;
-  right: 0px;
-  opacity: 0;
   cursor: pointer;
+  opacity: 0;
+  position: inherit;
+  top: 80px;
+  right: 0px;
 `;
 
 export const RowContainer = styled(motion.div)`
-  display: flex;
-  flex-direction: row;
   width: 100%;
-  :hover {
-    * {
-      opacity: 1;
-      transition: 1s;
-    }
-  }
+  height: 300px;
 `;
 
 export const Row = styled(motion.div)`
@@ -84,6 +82,11 @@ export const Row = styled(motion.div)`
   gap: 5px;
   width: 100%;
   position: absolute;
+  :hover {
+    + .slider-btn {
+      opacity: 1;
+    }
+  }
 `;
 export const Box = styled(motion.div)`
   &:first-child {
@@ -110,7 +113,7 @@ export const Info = styled(motion.div)`
 
 export const Image = styled(motion.div)<{ bgPhoto: string }>`
   background-image: url(${(props) => props.bgPhoto});
-  height: 200px;
+  height: 230px;
   width: 100%;
   background-size: cover;
   background-position: center center;

@@ -2,9 +2,9 @@ import { useNowPlayingMovies } from '../hooks/useMovies';
 import { makeImagePath } from '../api/utils';
 import { AnimatePresence } from 'framer-motion';
 import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
-import NowPlaying from '../Components/Movie/NowPlaying';
+import NowPlaying from '../Components/Movie/NowPlayingMovie';
 import {
-  SliderWrapper,
+  SlidersWrapper,
   Wrapper,
   Loader,
   Banner,
@@ -16,6 +16,7 @@ import {
   ModalTitle,
   ModalOverview,
 } from '../Components/styles';
+import PopularMovies from '../Components/Movie/PopularMovies';
 
 function Home() {
   const { data, isLoading } = useNowPlayingMovies();
@@ -41,9 +42,10 @@ function Home() {
             <Title>{data?.results[0].original_title}</Title>
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
-          <SliderWrapper>
+          <SlidersWrapper>
             <NowPlaying data={data} />
-          </SliderWrapper>
+            <PopularMovies />
+          </SlidersWrapper>
           <AnimatePresence>
             {moviePathMatch ? (
               <>
