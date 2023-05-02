@@ -41,10 +41,27 @@ export const SliderWrapper = styled.div`
 
 export const Slider = styled.div``;
 
-export const SliderButton = styled(motion.button)`
-  width: 30px;
-  background-color: black;
+export const SliderLeftBtn = styled(motion.button)`
+  width: 50px;
+  height: 50px;
   border: none;
+  border-radius: 50px;
+  background-color: black;
+  position: absolute;
+  top: 70px;
+  opacity: 0;
+  cursor: pointer;
+`;
+
+export const SliderRightBtn = styled(motion.button)`
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50px;
+  background-color: black;
+  position: absolute;
+  top: 70px;
+  right: 0px;
   opacity: 0;
   cursor: pointer;
 `;
@@ -185,5 +202,11 @@ export const boxVariants = {
       delay: 0.3,
       type: 'tween',
     },
+  },
+};
+
+export const buttonVariants = {
+  hover: {
+    opacity: 0.5,
   },
 };

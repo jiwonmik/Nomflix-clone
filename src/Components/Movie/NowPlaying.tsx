@@ -12,8 +12,10 @@ import {
   rowVariants,
   boxVariants,
   infoVariants,
-  SliderButton,
   RowContainer,
+  buttonVariants,
+  SliderLeftBtn,
+  SliderRightBtn,
 } from '../styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -58,13 +60,7 @@ function NowPlaying({ data }: Props) {
   return (
     <>
       <RowContainer>
-        <SliderButton onClick={decreaseIndex}>
-          <FontAwesomeIcon icon={faAngleLeft} style={{ color: '#ffffff' }} />
-        </SliderButton>
         <Category>Now Playing Movies</Category>
-        <SliderButton onClick={increaseIndex}>
-          <FontAwesomeIcon icon={faAngleRight} style={{ color: '#ffffff' }} />
-        </SliderButton>
       </RowContainer>
       <Slider>
         <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
@@ -96,6 +92,12 @@ function NowPlaying({ data }: Props) {
                   </Info>
                 </Box>
               ))}
+            <SliderLeftBtn onClick={decreaseIndex} variants={buttonVariants}>
+              <FontAwesomeIcon icon={faAngleLeft} style={{ color: '#ffffff' }} size="2x" />
+            </SliderLeftBtn>
+            <SliderRightBtn onClick={increaseIndex} variants={buttonVariants}>
+              <FontAwesomeIcon icon={faAngleRight} style={{ color: '#ffffff' }} size="2x" />
+            </SliderRightBtn>
           </Row>
         </AnimatePresence>
       </Slider>
