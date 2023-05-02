@@ -36,5 +36,7 @@ export const getPopluarMovies = async () => {
 };
 
 export const getUpcomingMovies = async () => {
-  return fetch(`${BASE_PATH}/upcoming?api_key=${VITE_API_KEY}`).then((response) => response.json());
+  return fetch(`${BASE_PATH}/upcoming?api_key=${VITE_API_KEY}&page=2`).then((response) =>
+    response.json()
+  );
 };
