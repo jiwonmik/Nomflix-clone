@@ -1,4 +1,4 @@
-import { useTvShows } from '../hooks/useTvShows';
+import { usePopularTvShows } from '../hooks/useTvShows';
 import { makeImagePath } from '../api/utils';
 import { AnimatePresence } from 'framer-motion';
 import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
@@ -13,20 +13,16 @@ import {
   ModalCover,
   ModalTitle,
   ModalOverview,
-  Category,
   SliderWrapper,
 } from '../Components/styles';
-import Popular from '../Components/Tv/Popular';
+import Popular from '../Components/Tv/PopularTv';
 
 function Tv() {
-  const { data, isLoading } = useTvShows();
+  const { data, isLoading } = usePopularTvShows();
 
   const navigate = useNavigate();
   const tvPathMatch: PathMatch<string> | null = useMatch('/tv/:id');
 
-  // const onBoxClicked = (tvId: number) => {
-  //   navigate(`/tv/${tvId}`);
-  // };
   const onOverlayClicked = () => {
     navigate('/tv');
   };
@@ -48,7 +44,6 @@ function Tv() {
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
           <SliderWrapper>
-            <Category>Popular TV Shows</Category>
             <Popular data={data} />
           </SliderWrapper>
           <AnimatePresence>
