@@ -27,7 +27,7 @@ function Slider({ data, type }: SliderProps) {
 
   const toggleLeaving = () => setLeaving((prev) => !prev);
   const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${type}-${movieId}`);
+    navigate(`/movies/${type}+${movieId}`);
   };
 
   const increaseIndex = () => {
@@ -67,7 +67,7 @@ function Slider({ data, type }: SliderProps) {
           .map((movie) => (
             <Box
               key={movie.id}
-              layoutId={type + '-' + movie.id.toString()}
+              layoutId={type + '+' + movie.id.toString()}
               variants={boxVariants}
               transition={{ Category: 'tween' }}
               whileHover="hover"

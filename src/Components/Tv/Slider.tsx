@@ -16,14 +16,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence } from 'framer-motion';
 import { makeImagePath } from '../../api/utils';
-import { IGetTvShowsResult } from '../../api/shows';
+import { SliderProps } from './types';
 
-interface Props {
-  data?: IGetTvShowsResult;
-  type: string;
-}
-
-function Slider({ data, type }: Props) {
+function Slider({ data, type }: SliderProps) {
   const [leaving, setLeaving] = useState(false);
   const [index, setIndex] = useState(0);
 
@@ -32,7 +27,7 @@ function Slider({ data, type }: Props) {
 
   const toggleLeaving = () => setLeaving((prev) => !prev);
   const onBoxClicked = (tvId: number) => {
-    navigate(`/tv/${tvId}`);
+    navigate(`/tv/${type}+${tvId}`);
   };
 
   const increaseIndex = () => {
@@ -72,7 +67,7 @@ function Slider({ data, type }: Props) {
           .map((tvShow) => (
             <Box
               key={tvShow.id}
-              layoutId={type + tvShow.id.toString()}
+              layoutId={type + '+' + tvShow.id.toString()}
               variants={boxVariants}
               transition={{ Category: 'tween' }}
               whileHover="hover"

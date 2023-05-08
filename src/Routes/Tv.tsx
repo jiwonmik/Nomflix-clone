@@ -21,17 +21,14 @@ function Tv() {
   const { data, isLoading } = usePopularTvShows();
 
   const navigate = useNavigate();
-  const tvPathMatch: PathMatch<string> | null = useMatch('/tv/:id');
-
   const onOverlayClicked = () => {
     navigate('/tv');
   };
 
-  const clickedTv =
-    tvPathMatch?.params.id &&
-    data?.results.find((tv) => tv.id.toString() === tvPathMatch.params.id);
+  const tvPathMatch: PathMatch<string> | null = useMatch('/tv/:id');
+  const tvId = tvPathMatch?.params.id?.split('+')[1];
 
-  if (isLoading) return <h2>Loading...</h2>;
+  const clickedTv = tvId && data?.results?.find((tv) => tv.id.toString() === tvId);
 
   return (
     <Wrapper>

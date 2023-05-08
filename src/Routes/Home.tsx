@@ -30,13 +30,12 @@ function Home() {
   const allMovies = data && [...data.results, ...popularMovie.results, ...upcomingMovie.results];
 
   const navigate = useNavigate();
-
-  const moviePathMatch: PathMatch<string> | null = useMatch('/movies/:id');
-  const movieId = moviePathMatch?.params.id?.split('-')[1];
-
   const onOverlayClicked = () => {
     navigate('/');
   };
+
+  const moviePathMatch: PathMatch<string> | null = useMatch('/movies/:id');
+  const movieId = moviePathMatch?.params.id?.split('+')[1];
 
   const clickedMovie = movieId && allMovies?.find((movie) => movie.id.toString() === movieId);
 
