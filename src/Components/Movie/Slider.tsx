@@ -15,14 +15,10 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { AnimatePresence } from 'framer-motion';
-import { IGetMoviesResult } from '../../api/movies';
 import { makeImagePath } from '../../api/utils';
+import { SliderProps } from './types';
 
-interface Props {
-  data?: IGetMoviesResult;
-}
-
-function Slider({ data }: Props) {
+function Slider({ data, type }: SliderProps) {
   const [leaving, setLeaving] = useState(false);
   const [index, setIndex] = useState(0);
 
@@ -31,7 +27,7 @@ function Slider({ data }: Props) {
 
   const toggleLeaving = () => setLeaving((prev) => !prev);
   const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
+    navigate(`/movies/${type}-${movieId}`);
   };
 
   const increaseIndex = () => {
@@ -71,7 +67,7 @@ function Slider({ data }: Props) {
           .map((movie) => (
             <Box
               key={movie.id}
-              layoutId={movie.id.toString()}
+              layoutId={type + '-' + movie.id.toString()}
               variants={boxVariants}
               transition={{ Category: 'tween' }}
               whileHover="hover"

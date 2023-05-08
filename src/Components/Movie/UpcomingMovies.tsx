@@ -1,15 +1,13 @@
-import { useUpcomingMovies } from '../../hooks/useMovies';
 import Slider from './Slider';
-import { Category, Loader, RowContainer, SliderWrapper } from '../../styles';
+import { Category, RowContainer, SliderWrapper } from '../../styles';
+import { MovieProps } from './types';
 
-function UpcomingMovies() {
-  const { data, isLoading } = useUpcomingMovies();
-
+function UpcomingMovies({ data }: MovieProps) {
   return (
     <SliderWrapper>
       <RowContainer>
         <Category>Upcoming Movies</Category>
-        {isLoading ? <Loader>Loading...</Loader> : <Slider data={data} type="upcoming" />}
+        <Slider data={data} type="upcoming" />
       </RowContainer>
     </SliderWrapper>
   );

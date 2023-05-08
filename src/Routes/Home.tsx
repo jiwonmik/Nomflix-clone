@@ -1,4 +1,4 @@
-import { useNowPlayingMovies } from '../hooks/useMovies';
+import { useNowPlayingMovies, usePopularMovies, useUpcomingMovies } from '../hooks/useMovies';
 import { makeImagePath } from '../api/utils';
 import { AnimatePresence } from 'framer-motion';
 import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
@@ -24,17 +24,21 @@ import UpcomingMovies from '../Components/Movie/UpcomingMovies';
 
 function Home() {
   const { data, isLoading } = useNowPlayingMovies();
+  const { popularMovie } = usePopularMovies();
+  const { upcomingMovie } = useUpcomingMovies();
+
+  const allMovies = data && [...data.results, ...popularMovie.results, ...upcomingMovie.results];
+
   const navigate = useNavigate();
 
   const moviePathMatch: PathMatch<string> | null = useMatch('/movies/:id');
+  const movieId = moviePathMatch?.params.id?.split('-')[1];
 
   const onOverlayClicked = () => {
     navigate('/');
   };
 
-  const clickedMovie =
-    moviePathMatch?.params.id &&
-    data?.results.find((movie) => movie.id.toString() === moviePathMatch.params.id);
+  const clickedMovie = movieId && allMovies?.find((movie) => movie.id.toString() === movieId);
 
   return (
     <Wrapper>
@@ -52,8 +56,8 @@ function Home() {
           </Banner>
           <SlidersWrapper>
             <NowPlaying data={data} />
-            <PopularMovies />
-            <UpcomingMovies />
+            <PopularMovies data={popularMovie} />
+            <UpcomingMovies data={upcomingMovie} />
           </SlidersWrapper>
           <AnimatePresence>
             {moviePathMatch ? (

@@ -20,9 +20,10 @@ import { IGetTvShowsResult } from '../../api/shows';
 
 interface Props {
   data?: IGetTvShowsResult;
+  type: string;
 }
 
-function Slider({ data }: Props) {
+function Slider({ data, type }: Props) {
   const [leaving, setLeaving] = useState(false);
   const [index, setIndex] = useState(0);
 
@@ -71,7 +72,7 @@ function Slider({ data }: Props) {
           .map((tvShow) => (
             <Box
               key={tvShow.id}
-              layoutId={tvShow.id.toString()}
+              layoutId={type + tvShow.id.toString()}
               variants={boxVariants}
               transition={{ Category: 'tween' }}
               whileHover="hover"

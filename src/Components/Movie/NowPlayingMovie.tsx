@@ -1,17 +1,13 @@
-import { IGetMoviesResult } from '../../api/movies';
 import Slider from './Slider';
 import { Category, RowContainer, SliderWrapper } from '../../styles';
+import { MovieProps } from './types';
 
-export interface Props {
-  data?: IGetMoviesResult;
-}
-
-function NowPlayingMovies({ data }: Props) {
+function NowPlayingMovies({ data }: MovieProps) {
   return (
     <SliderWrapper>
       <RowContainer>
         <Category>Now Playing Movies</Category>
-        <Slider data={data} />
+        <Slider data={data} type="nowPlaying" />
       </RowContainer>
     </SliderWrapper>
   );

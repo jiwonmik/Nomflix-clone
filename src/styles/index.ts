@@ -53,6 +53,7 @@ export const Loader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white;
 `;
 
 export const Category = styled.h2`
@@ -200,13 +201,13 @@ export const Overlay = styled(motion.div)`
 
 export const rowVariants = {
   hidden: {
-    x: window.outerWidth + 20,
+    x: window.outerWidth + 30,
   },
   visible: {
     x: 0,
   },
   exit: {
-    x: -window.outerWidth - 20,
+    x: -window.outerWidth - 30,
   },
 };
 
