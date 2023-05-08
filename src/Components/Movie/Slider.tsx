@@ -21,6 +21,7 @@ import { SliderProps } from './types';
 function Slider({ data, type }: SliderProps) {
   const [leaving, setLeaving] = useState(false);
   const [index, setIndex] = useState(0);
+  const [back, setBack] = useState(false);
 
   const navigate = useNavigate();
   const offset = 6;
@@ -34,6 +35,7 @@ function Slider({ data, type }: SliderProps) {
     if (data) {
       if (leaving) return;
       toggleLeaving();
+      setBack(false);
       const totalMovies = data.results.length - 1;
       const maxIndex = Math.floor(totalMovies / offset) - 1;
       setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
@@ -44,6 +46,7 @@ function Slider({ data, type }: SliderProps) {
     if (data) {
       if (leaving) return;
       toggleLeaving();
+      setBack(true);
       const totalMovies = data.results.length - 1;
       const maxIndex = Math.floor(totalMovies / offset) - 1;
       setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
@@ -51,8 +54,9 @@ function Slider({ data, type }: SliderProps) {
   };
 
   return (
-    <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+    <AnimatePresence custom={back} initial={false} onExitComplete={toggleLeaving}>
       <Row
+        custom={back}
         key={index}
         variants={rowVariants}
         initial="hidden"

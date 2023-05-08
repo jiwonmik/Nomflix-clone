@@ -200,15 +200,15 @@ export const Overlay = styled(motion.div)`
 `;
 
 export const rowVariants = {
-  hidden: {
-    x: window.outerWidth + 30,
-  },
+  hidden: (back: boolean) => ({
+    x: back ? -window.outerWidth - 30 : window.outerWidth + 30,
+  }),
   visible: {
     x: 0,
   },
-  exit: {
-    x: -window.outerWidth - 30,
-  },
+  exit: (back: boolean) => ({
+    x: back ? window.outerWidth + 30 : -window.outerWidth - 30,
+  }),
 };
 
 export const infoVariants = {
