@@ -2,14 +2,14 @@ import { Category, RowContainer, SliderWrapper } from '../../styles';
 import Slider from './Slider';
 import { Props } from './types';
 
-function Popular({ data }: Props) {
+function OnTheAirTv({ data }: Props) {
   return (
     <SliderWrapper>
       <RowContainer>
-        <Category>Popular</Category>
-        <Slider data={data} type="popular" />
+        <Category>On the Air</Category>
+        <Slider data={data} type="onTheAir" />
       </RowContainer>
     </SliderWrapper>
   );
 }
-export default Popular;
+export default OnTheAirTv;

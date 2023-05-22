@@ -2,14 +2,14 @@ import { Category, RowContainer, SliderWrapper } from '../../styles';
 import Slider from './Slider';
 import { Props } from './types';
 
-function Popular({ data }: Props) {
+function TopRated({ data }: Props) {
   return (
     <SliderWrapper>
       <RowContainer>
-        <Category>Popular</Category>
-        <Slider data={data} type="popular" />
+        <Category>Top Rated</Category>
+        <Slider data={data} type="topRated" />
       </RowContainer>
     </SliderWrapper>
   );
 }
-export default Popular;
+export default TopRated;

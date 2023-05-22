@@ -24,6 +24,24 @@ export interface ITvShow {
   vote_count: number;
 }
 
+export const getAiringTodayTvShows = async () => {
+  return fetch(`${BASE_PATH}/on_the_air?api_key=${VITE_API_KEY}`).then((response) =>
+    response.json()
+  );
+};
+
+export const getOnTheAirTvShows = async () => {
+  return fetch(`${BASE_PATH}/airing_today?api_key=${VITE_API_KEY}`).then((response) =>
+    response.json()
+  );
+};
+
 export const getPopularTvShows = async () => {
   return fetch(`${BASE_PATH}/popular?api_key=${VITE_API_KEY}`).then((response) => response.json());
+};
+
+export const getTopRatedTvShows = async () => {
+  return fetch(`${BASE_PATH}/top_rated?api_key=${VITE_API_KEY}`).then((response) =>
+    response.json()
+  );
 };

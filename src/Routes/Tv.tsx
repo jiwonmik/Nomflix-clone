@@ -1,4 +1,9 @@
-import { usePopularTvShows } from '../hooks/useTvShows';
+import {
+  useAiringTodayTvShows,
+  useOnTheAirTvShows,
+  usePopularTvShows,
+  useTopRatedTvShows,
+} from '../hooks/useTvShows';
 import { makeImagePath } from '../api/utils';
 import { AnimatePresence } from 'framer-motion';
 import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
@@ -16,9 +21,15 @@ import {
   SliderWrapper,
 } from '../styles';
 import Popular from '../Components/Tv/PopularTv';
+import AiringToday from '../Components/Tv/AiringTodayTv';
+import OnTheAirTv from '../Components/Tv/OnTheAirTv';
+import TopRated from '../Components/Tv/TopRatedTv';
 
 function Tv() {
-  const { data, isLoading } = usePopularTvShows();
+  const { data, isLoading } = useAiringTodayTvShows();
+  const { onTheAirTv } = useOnTheAirTvShows();
+  const { popularTv } = usePopularTvShows();
+  const { topRatedTv } = useTopRatedTvShows();
 
   const navigate = useNavigate();
   const onOverlayClicked = () => {
@@ -41,7 +52,10 @@ function Tv() {
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
           <SliderWrapper>
-            <Popular data={data} />
+            <AiringToday data={data} />
+            <Popular data={popularTv} />
+            <OnTheAirTv data={onTheAirTv} />
+            <TopRated data={topRatedTv} />
           </SliderWrapper>
           <AnimatePresence>
             {tvPathMatch ? (
