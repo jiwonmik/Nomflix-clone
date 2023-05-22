@@ -124,6 +124,10 @@ function Header() {
   const { register, handleSubmit } = useForm<IForm>();
   const onValid = ({ keyword }: IForm) => {
     navigation(`/search?keyword=${keyword}`);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const toggleSearch = () => {
