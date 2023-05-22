@@ -116,7 +116,6 @@ export const Row = styled(motion.div)`
     + .slider-btn {
       opacity: 1;
     }
-    z-index: 10;
   }
 `;
 
