@@ -1,12 +1,12 @@
-import { createHashRouter } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import Home from './Routes/Home';
 import Tv from './Routes/Tv';
 import Search from './Routes/Search';
 import Header from './Components/Header';
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/Nomflix-clone',
     element: <Header />,
     children: [
       {
