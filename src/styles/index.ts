@@ -63,6 +63,14 @@ export const Category = styled.h2`
   color: ${(props) => props.theme.white.darker};
 `;
 
+export const SearchSlider = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+  width: 100%;
+  position: absolute;
+`;
+
 export const SliderWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -108,8 +116,10 @@ export const Row = styled(motion.div)`
     + .slider-btn {
       opacity: 1;
     }
+    z-index: 10;
   }
 `;
+
 export const Box = styled(motion.div)`
   &:first-child {
     transform-origin: center left;
