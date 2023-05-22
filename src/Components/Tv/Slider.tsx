@@ -54,7 +54,7 @@ function Slider({ data, type }: SliderProps) {
   };
 
   return (
-    <AnimatePresence custom={[back, leaving]} initial={false} onExitComplete={toggleLeaving}>
+    <AnimatePresence custom={back} initial={false} onExitComplete={toggleLeaving}>
       <Row
         custom={back}
         key={index}
@@ -84,20 +84,10 @@ function Slider({ data, type }: SliderProps) {
               </Info>
             </Box>
           ))}
-        <SliderLeftBtn
-          className="slider-btn"
-          onClick={decreaseIndex}
-          custom={leaving}
-          variants={buttonVariants}
-        >
+        <SliderLeftBtn className="slider-btn" onClick={decreaseIndex} variants={buttonVariants}>
           <FontAwesomeIcon icon={faAngleLeft} style={{ color: '#ffffff' }} size="2x" />
         </SliderLeftBtn>
-        <SliderRightBtn
-          className="slider-btn"
-          onClick={increaseIndex}
-          custom={leaving}
-          variants={buttonVariants}
-        >
+        <SliderRightBtn className="slider-btn" onClick={increaseIndex} variants={buttonVariants}>
           <FontAwesomeIcon icon={faAngleRight} style={{ color: '#ffffff' }} size="2x" />
         </SliderRightBtn>
       </Row>
