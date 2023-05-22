@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import {
   IGetMoviesResult,
   getNowPlayingMovies,
-  getPopluarMovies,
+  getTopRatedMovies,
   getUpcomingMovies,
 } from '../api/movies';
 
@@ -17,13 +17,13 @@ export const useNowPlayingMovies = () => {
   return useQuery<IGetMoviesResult>(['movies', 'nowPlaying'], () => getNowPlayingMovies());
 };
 
-export const usePopularMovies = () => {
+export const useTopRatedMovies = () => {
   const { data } = useQuery<IGetMoviesResult>({
-    queryKey: ['movies', 'popular'],
-    queryFn: () => getPopluarMovies(),
+    queryKey: ['movies', 'topRated'],
+    queryFn: () => getTopRatedMovies(),
     initialData: initialMovie,
   });
-  return { popularMovie: data };
+  return { topRatedMovies: data };
 };
 
 export const useUpcomingMovies = () => {

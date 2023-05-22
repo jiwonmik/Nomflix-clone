@@ -2,14 +2,14 @@ import Slider from './Slider';
 import { Category, RowContainer, SliderWrapper } from '../../styles';
 import { MovieProps } from './types';
 
-function NowPlayingMovies({ data }: MovieProps) {
+function TopRatedMovies({ data }: MovieProps) {
   return (
     <SliderWrapper>
       <RowContainer>
-        <Category>Now Playing Movies</Category>
-        <Slider data={data} type="nowPlaying" />
+        <Category>Top Rated Movies</Category>
+        <Slider data={data} type="topRated" />
       </RowContainer>
     </SliderWrapper>
   );
 }
-export default NowPlayingMovies;
+export default TopRatedMovies;

@@ -2,14 +2,14 @@ import Slider from './Slider';
 import { Category, RowContainer, SliderWrapper } from '../../styles';
 import { MovieProps } from './types';
 
-function PopularMovies({ data }: MovieProps) {
+function NowPlayingMovies({ data }: MovieProps) {
   return (
     <SliderWrapper>
       <RowContainer>
-        <Category>Popular Movies</Category>
-        <Slider data={data} type="popular" />
+        <Category>Now Playing Movies</Category>
+        <Slider data={data} type="latest" />
       </RowContainer>
     </SliderWrapper>
   );
 }
-export default PopularMovies;
+export default NowPlayingMovies;
