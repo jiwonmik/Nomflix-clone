@@ -1,3 +1,5 @@
+import { ISearch } from './types';
+
 const BASE_PATH = 'https://api.themoviedb.org/3/tv';
 const VITE_API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -44,4 +46,10 @@ export const getTopRatedTvShows = async () => {
   return fetch(`${BASE_PATH}/top_rated?api_key=${VITE_API_KEY}`).then((response) =>
     response.json()
   );
+};
+
+export const getSearchTvShows = async ({ query }: ISearch): Promise<IGetTvShowsResult> => {
+  return fetch(
+    `https://api.themoviedb.org/3/search/tv?api_key=${VITE_API_KEY}&query=${query}`
+  ).then((response) => response.json());
 };

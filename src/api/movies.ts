@@ -1,3 +1,5 @@
+import { ISearch } from './types';
+
 const BASE_PATH = 'https://api.themoviedb.org/3/movie';
 const VITE_API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -41,4 +43,10 @@ export const getUpcomingMovies = async () => {
   return fetch(`${BASE_PATH}/upcoming?api_key=${VITE_API_KEY}&page=2`).then((response) =>
     response.json()
   );
+};
+
+export const getSearchMovies = async ({ query }: ISearch): Promise<IGetMoviesResult> => {
+  return fetch(
+    `https://api.themoviedb.org/3/search/movie?api_key=${VITE_API_KEY}&query=${query}`
+  ).then((response) => response.json());
 };
