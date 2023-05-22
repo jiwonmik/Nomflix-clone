@@ -8,11 +8,8 @@ import { makeImagePath } from '../api/utils';
 import { AnimatePresence } from 'framer-motion';
 import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
 import {
-  Banner,
   Wrapper,
   Loader,
-  Title,
-  Overview,
   Overlay,
   Modal,
   ModalCover,
@@ -24,6 +21,7 @@ import Popular from '../Components/Tv/PopularTv';
 import AiringToday from '../Components/Tv/AiringTodayTv';
 import OnTheAirTv from '../Components/Tv/OnTheAirTv';
 import TopRated from '../Components/Tv/TopRatedTv';
+import Banner from '../Components/Tv/Banner';
 
 function Tv() {
   const { data, isLoading } = useAiringTodayTvShows();
@@ -47,10 +45,7 @@ function Tv() {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner bgPhoto={makeImagePath(data?.results[0].backdrop_path || '')}>
-            <Title>{data?.results[0].name}</Title>
-            <Overview>{data?.results[0].overview}</Overview>
-          </Banner>
+          <Banner data={data} />
           <SliderWrapper>
             <AiringToday data={data} />
             <Popular data={popularTv} />

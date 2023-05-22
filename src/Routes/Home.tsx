@@ -3,24 +3,19 @@ import { makeImagePath } from '../api/utils';
 import { AnimatePresence } from 'framer-motion';
 import { PathMatch, useMatch, useNavigate } from 'react-router-dom';
 import {
-  Banner,
   Wrapper,
   SlidersWrapper,
   Loader,
-  Title,
-  Overview,
   Overlay,
   Modal,
   ModalCover,
   ModalTitle,
   ModalOverview,
-  PlayBtn,
-  InfoBtn,
-  BtnWrapper,
 } from '../styles';
 import NowPlayingMovies from '../Components/Movie/NowPlayingMovies';
 import TopRatedMovies from '../Components/Movie/TopRatedMovies';
 import UpcomingMovies from '../Components/Movie/UpcomingMovies';
+import Banner from '../Components/Movie/Banner';
 
 function Home() {
   const { data, isLoading } = useNowPlayingMovies();
@@ -45,14 +40,7 @@ function Home() {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner bgPhoto={makeImagePath(data?.results[0].backdrop_path || '')}>
-            <Title>{data?.results[0].original_title}</Title>
-            <Overview>{data?.results[0].overview}</Overview>
-            <BtnWrapper>
-              <PlayBtn> ▶︎ PLAY </PlayBtn>
-              <InfoBtn> ⓘ INFO </InfoBtn>
-            </BtnWrapper>
-          </Banner>
+          <Banner data={data} />
           <SlidersWrapper>
             <NowPlayingMovies data={data} />
             <TopRatedMovies data={topRatedMovies} />

@@ -1,8 +1,8 @@
 import { Category, RowContainer, SliderWrapper } from '../../styles';
 import Slider from './Slider';
-import { Props } from './types';
+import { TvProps } from './types';
 
-function TopRated({ data }: Props) {
+function TopRated({ data }: TvProps) {
   return (
     <SliderWrapper>
       <RowContainer>

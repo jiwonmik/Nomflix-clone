@@ -1,8 +1,8 @@
 import { Category, RowContainer, SliderWrapper } from '../../styles';
 import Slider from './Slider';
-import { Props } from './types';
+import { TvProps } from './types';
 
-function Popular({ data }: Props) {
+function Popular({ data }: TvProps) {
   return (
     <SliderWrapper>
       <RowContainer>

@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   z-index: -1;
 `;
 
-export const Banner = styled.div<{ bgPhoto: string }>`
+export const BannerWrapper = styled.div<{ bgPhoto: string }>`
   width: 100%;
   height: 70vh;
   display: flex;

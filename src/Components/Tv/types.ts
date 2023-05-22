@@ -1,6 +1,6 @@
 import { IGetTvShowsResult } from '../../api/shows';
 
-export interface Props {
+export interface TvProps {
   data?: IGetTvShowsResult;
 }
 
