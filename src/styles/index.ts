@@ -232,7 +232,7 @@ export const boxVariants = {
 };
 
 export const buttonVariants = {
-  hover: {
-    opacity: 0.5,
-  },
+  hover: (leaving: boolean) => ({
+    opacity: !leaving ? 0.5 : 0,
+  }),
 };
