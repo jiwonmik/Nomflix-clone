@@ -6,7 +6,7 @@ import Header from './Components/Header';
 
 const router = createBrowserRouter([
   {
-    path: '/Nomflix-clone',
+    path: '/',
     element: <Header />,
     children: [
       {
